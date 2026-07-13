@@ -10,7 +10,7 @@ import argparse
 import matplotlib.pyplot as plt
 import torch
 
-from galaxy_zoo import CLASSES, make_galaxy
+from galaxy_textures import CLASSES, make_galaxy
 
 plt.rcParams.update({
     "font.family": "serif",

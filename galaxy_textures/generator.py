@@ -1,7 +1,7 @@
 """Procedural synthetic galaxy image generator.
 
 This module keeps the public ``make_galaxy`` entry point and delegates the
-class-specific rendering to focused modules under :mod:`galaxy_zoo`.
+class-specific rendering to focused modules under :mod:`galaxy_textures`.
 """
 
 import numpy as np

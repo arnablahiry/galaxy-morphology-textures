@@ -16,4 +16,4 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["galaxy_zoo*"]
+include = ["galaxy_textures*"]

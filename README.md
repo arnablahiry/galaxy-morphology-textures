@@ -1,5 +1,8 @@
 # galaxy-textures
 
+[![CI](https://github.com/arnablahiry/galaxy-morphology-textures/actions/workflows/ci.yml/badge.svg)](https://github.com/arnablahiry/galaxy-morphology-textures/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 A small procedural image set for galaxy-morphology experiments. It is built
 with PyTorch and explicit analytic shapes, so the signals are easy to control
 and the output stays readable for interpretability work. It is not a physical
@@ -20,14 +23,14 @@ Each row shows a different class, with 5 realizations per class.
 
 | file | what it does |
 |---|---|
-| [galaxy_zoo/generator.py](galaxy_zoo/generator.py) | Public `make_galaxy` entry point and class dispatch. |
-| [galaxy_zoo/elliptical.py](galaxy_zoo/elliptical.py) | Smooth elliptical renderer with a warped outer halo. |
-| [galaxy_zoo/spiral.py](galaxy_zoo/spiral.py) | Spiral renderer with bifurcating arms and HII knots. |
-| [galaxy_zoo/barred_spiral.py](galaxy_zoo/barred_spiral.py) | Barred spiral renderer with arms anchored at the bar tips. |
-| [galaxy_zoo/merger.py](galaxy_zoo/merger.py) | Interacting pair renderer with bridge and tidal tails. |
-| [galaxy_zoo/edge_on.py](galaxy_zoo/edge_on.py) | Edge-on disk renderer with dust lane and flare. |
-| [galaxy_zoo/irregular.py](galaxy_zoo/irregular.py) | Clumpy irregular renderer with optional tidal debris. |
-| [galaxy_zoo/shared.py](galaxy_zoo/shared.py) | Shared satellites, background, and noise helpers. |
+| [galaxy_textures/generator.py](galaxy_textures/generator.py) | Public `make_galaxy` entry point and class dispatch. |
+| [galaxy_textures/elliptical.py](galaxy_textures/elliptical.py) | Smooth elliptical renderer with a warped outer halo. |
+| [galaxy_textures/spiral.py](galaxy_textures/spiral.py) | Spiral renderer with bifurcating arms and HII knots. |
+| [galaxy_textures/barred_spiral.py](galaxy_textures/barred_spiral.py) | Barred spiral renderer with arms anchored at the bar tips. |
+| [galaxy_textures/merger.py](galaxy_textures/merger.py) | Interacting pair renderer with bridge and tidal tails. |
+| [galaxy_textures/edge_on.py](galaxy_textures/edge_on.py) | Edge-on disk renderer with dust lane and flare. |
+| [galaxy_textures/irregular.py](galaxy_textures/irregular.py) | Clumpy irregular renderer with optional tidal debris. |
+| [galaxy_textures/shared.py](galaxy_textures/shared.py) | Shared satellites, background, and noise helpers. |
 | [examples/render_grid.py](examples/render_grid.py) | Quick visual check that samples all six classes. |
 
 ## Classes
@@ -53,7 +56,7 @@ pip install -e .
 
 ```python
 import torch
-from galaxy_zoo import CLASSES, make_galaxy
+from galaxy_textures import CLASSES, make_galaxy
 
 torch.manual_seed(0)
 img = make_galaxy(kind=1, size=128)
