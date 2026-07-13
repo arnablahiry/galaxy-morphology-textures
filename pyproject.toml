@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "toy-galaxy-morphology"
+name = "galaxy-textures"
 version = "0.1.0"
-description = "Procedural synthetic Galaxy-Zoo-style morphology image generator for ML interpretability research/teaching."
+description = "Procedural synthetic galaxy textures for ML interpretability work and teaching."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }

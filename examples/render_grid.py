@@ -35,7 +35,7 @@ def clean_axis(ax):
 
 
 def main(seed: int = 999, size: int = 128, rows: int = 5, cols: int = 6,
-         out_path: str = "galaxy_zoo_grid.png") -> None:
+         out_path: str = "galaxy_textures_grid.png") -> None:
     torch.manual_seed(seed)
     fig, axes = plt.subplots(rows, cols, figsize=(2.4 * cols, 2.4 * rows))
     for a in axes.flat:
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     parser.add_argument("--size", type=int, default=128)
     parser.add_argument("--rows", type=int, default=5)
     parser.add_argument("--cols", type=int, default=6)
-    parser.add_argument("--out", type=str, default="galaxy_zoo_grid.png")
+    parser.add_argument("--out", type=str, default="galaxy_textures_grid.png")
     args = parser.parse_args()
     main(seed=args.seed, size=args.size, rows=args.rows, cols=args.cols,
          out_path=args.out)

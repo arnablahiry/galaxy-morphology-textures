@@ -1,30 +1,45 @@
-# toy-galaxy-morphology-textures
+# galaxy-textures
 
-A procedural, PyTorch-based synthetic galaxy image generator built for
-teaching neural network interpretability — not for astrophysical research.
-Every image is assembled from explicit analytic profiles (Sersic bulges,
-exponential disks, logarithmic spiral arms, sech² edge-on disks, tidally
-distorted merger components, random-walk irregulars). There is no simulation
-or real imaging data underneath it, and nothing here is photometrically
-calibrated.
+A small procedural image set for galaxy-morphology experiments. It is built
+with PyTorch and explicit analytic shapes, so the signals are easy to control
+and the output stays readable for interpretability work. It is not a physical
+simulation and it is not calibrated to real survey data.
 
-The point of building it this way is that every generative factor is known
-and controllable: arm count, bar length, merger mass ratio, interaction
-stage, star-formation activity, and so on are all explicit parameters (or
-per-image draws) rather than hidden in a black-box simulator. That makes it
-useful for correlating what a classifier attends to (saliency maps, Grad-CAM,
-activation maps) against ground truth you actually control.
+The main idea is simple: each galaxy type is rendered by its own module, the
+shared dispatcher lives in one place, and the example script shows the whole
+set in one grid. That keeps the code easy to skim when you want to see what a
+given class actually does.
+
+## Texture Grid
+
+![Texture grid](assets/texture_grid.png)
+
+Each row shows a different class, with 5 realizations per class.
+
+## What Lives Where
+
+| file | what it does |
+|---|---|
+| [galaxy_zoo/generator.py](galaxy_zoo/generator.py) | Public `make_galaxy` entry point and class dispatch. |
+| [galaxy_zoo/elliptical.py](galaxy_zoo/elliptical.py) | Smooth elliptical renderer with a warped outer halo. |
+| [galaxy_zoo/spiral.py](galaxy_zoo/spiral.py) | Spiral renderer with bifurcating arms and HII knots. |
+| [galaxy_zoo/barred_spiral.py](galaxy_zoo/barred_spiral.py) | Barred spiral renderer with arms anchored at the bar tips. |
+| [galaxy_zoo/merger.py](galaxy_zoo/merger.py) | Interacting pair renderer with bridge and tidal tails. |
+| [galaxy_zoo/edge_on.py](galaxy_zoo/edge_on.py) | Edge-on disk renderer with dust lane and flare. |
+| [galaxy_zoo/irregular.py](galaxy_zoo/irregular.py) | Clumpy irregular renderer with optional tidal debris. |
+| [galaxy_zoo/shared.py](galaxy_zoo/shared.py) | Shared satellites, background, and noise helpers. |
+| [examples/render_grid.py](examples/render_grid.py) | Quick visual check that samples all six classes. |
 
 ## Classes
 
-| kind | name          | notes |
-|------|---------------|-------|
-| 0    | elliptical    | Sersic bulge + warped extended halo |
-| 1    | spiral        | 2–3 arms rooted at the bulge, occasional bifurcation, HII knots |
-| 2    | barred spiral | quartic bar, arms rooted at the bar tips |
-| 3    | merger        | two tidally interacting disks (spiral-spiral or spiral-barred), continuous interaction `stage`, mass-ratio asymmetry, bridge + outward tails |
-| 4    | edge-on       | Sombrero-like thin disk + bulge + dust lane |
-| 5    | irregular     | clumpy random-walk body, optional tidal debris plume, heavy HII speckling |
+| kind | name | what it looks like |
+|---|---|---|
+| 0 | elliptical | Smooth bulge with a warped halo |
+| 1 | spiral | 2-3 arms, occasional bifurcation, bright knots |
+| 2 | barred spiral | Compact bar with arms rooted at the bar ends |
+| 3 | merger | Two interacting disks with bridge and tails |
+| 4 | edge-on | Thin disk, bulge, dust lane |
+| 5 | irregular | Clumpy body with noisy, disturbed structure |
 
 ## Install
 
@@ -34,45 +49,37 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## Usage
+## Use It
 
 ```python
 import torch
-from galaxy_zoo import make_galaxy, CLASSES
+from galaxy_zoo import CLASSES, make_galaxy
 
 torch.manual_seed(0)
-img = make_galaxy(kind=1, size=128)   # -> torch.Tensor, shape (1, 128, 128), values in [0, 3]
+img = make_galaxy(kind=1, size=128)
+# img is a torch.Tensor with shape (1, 128, 128)
 
-# Merger-specific overrides (kind == 3 only):
+# Merger-only overrides:
 img = make_galaxy(kind=3, size=128, stage=0.8, merger_barred=True)
 ```
 
-Render a demo grid sampling all six classes:
+To preview the whole set as a grid:
 
 ```bash
-python examples/render_grid.py --out galaxy_zoo_grid.png
+python examples/render_grid.py --out galaxy_textures_grid.png
 ```
 
-## Known simplifications
+## Notes
 
-This is a stylized teaching dataset, not simulation-grade. Known gaps worth
-being aware of before drawing conclusions from anything trained on it:
+This is intentionally stylized. A few important simplifications:
 
-- Single-band grayscale — no color gradients (real ellipticals are redder,
-  star-forming arms bluer), which is a real classification cue in actual
-  Galaxy Zoo data.
-- Flat additive Gaussian noise rather than Poisson (source-dependent) noise,
-  and no PSF/seeing blur.
-- Merger tidal dynamics (bridge/tail geometry, arm stretching) are a
-  physically-motivated cartoon of the Toomre & Toomre mechanism, not an
-  N-body integration — the two galaxies' spins and orbital angular momentum
-  aren't fully self-consistent.
-- Classes are, by construction, fairly cleanly separable (e.g. mergers
-  always have exactly two nuclei). Real Galaxy Zoo classification is
-  hard specifically because of the ambiguous middle ground this generator
-  doesn't fully reproduce — worth keeping in mind if you're using saliency
-  maps to reason about what a trained classifier has "discovered."
+- Single-band grayscale only, so you do not get real color cues.
+- Gaussian noise is added, but there is no PSF/seeing model.
+- Merger structure is a controlled cartoon of tidal interaction, not an N-body
+  simulation.
+- The classes are cleaner than real survey data on purpose, which makes the
+  set better for demos than for benchmarking survey-grade classification.
 
 ## License
 
-MIT — see `LICENSE`.
+MIT. See [LICENSE](LICENSE).
