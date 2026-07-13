@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "toy-galaxy-morphology"
+version = "0.1.0"
+description = "Procedural synthetic Galaxy-Zoo-style morphology image generator for ML interpretability research/teaching."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+    "torch>=1.12",
+    "numpy>=1.22",
+    "matplotlib>=3.5",
+]
+
+[tool.setuptools.packages.find]
+include = ["galaxy_zoo*"]
