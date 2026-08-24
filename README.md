@@ -1,6 +1,7 @@
 # galaxy-textures
 
 [![CI](https://github.com/arnablahiry/galaxy-morphology-textures/actions/workflows/ci.yml/badge.svg)](https://github.com/arnablahiry/galaxy-morphology-textures/actions/workflows/ci.yml)
+[![Docs](https://github.com/arnablahiry/galaxy-morphology-textures/actions/workflows/docs.yml/badge.svg)](https://github.com/arnablahiry/galaxy-morphology-textures/actions/workflows/docs.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 A small procedural image set for galaxy-morphology experiments. It is built
@@ -82,6 +83,18 @@ This is intentionally stylized. A few important simplifications:
   simulation.
 - The classes are cleaner than real survey data on purpose, which makes the
   set better for demos than for benchmarking survey-grade classification.
+
+## Documentation
+
+Full docs, including installation, quickstart, and API reference, are published at
+[arnablahiry.github.io/software/toy-galaxy-morphological-textures](https://arnablahiry.github.io/software/toy-galaxy-morphological-textures/).
+
+The Sphinx sources live in [docs/](docs/index.rst). To build them locally:
+
+```bash
+pip install -r docs/requirements.txt
+sphinx-build -b html docs docs/_build/html
+```
 
 ## License
 

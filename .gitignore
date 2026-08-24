@@ -9,7 +9,9 @@ venv/
 *.egg-info/
 build/
 dist/
+docs/_build/
 
 # generated renders
 *.png
 !docs/**/*.png
+!assets/*.png
