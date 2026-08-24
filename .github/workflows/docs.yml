@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  build-docs:
+  docs:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,31 +27,14 @@ jobs:
       - name: Build documentation
         run: sphinx-build -b html docs docs/_build/html -W
 
-      - name: Upload built docs
-        uses: actions/upload-artifact@v4
-        with:
-          name: docs-html
-          path: docs/_build/html
-
-  deploy-docs:
-    needs: build-docs
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download built docs
-        uses: actions/download-artifact@v4
-        with:
-          name: docs-html
-          path: docs/_build/html
-
-      - name: Deploy to arnablahiry.github.io
+      - name: Deploy to https://arnablahiry.github.io/software/toy-galaxy-morphological-textures/
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.DEPLOY_DOCS }}
           publish_dir: docs/_build/html
           external_repository: arnablahiry/arnablahiry.github.io
-          publish_branch: master
+          publish_branch: main
           destination_dir: software/toy-galaxy-morphological-textures
           keep_files: true
           user_name: "github-actions[bot]"
